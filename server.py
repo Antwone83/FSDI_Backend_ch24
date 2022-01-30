@@ -120,11 +120,10 @@ def get_product(id):
 @app.route("/api/catalog/<category>")
 def get_by_category(category):
     result = []
-    category = category.lower()
-    for product in catalog:
-        if product["category"].lower() == category:
-
-            result.append(product)
+    cursor = db.products.find({"category": category})
+    for prod in cursor:
+        prod["_id"] = str(prod["_id"])
+        result.append(prod)
 
     return json.dumps(result)
 
@@ -175,6 +174,73 @@ def get_highest():
         if prod_invest > high_invest:   
             highest = prod
     return json.dumps(highest)
+
+
+
+
+
+
+#########################################################
+############## Coupon Codes Endpoints ###################
+#########################################################
+@app.route("/api/couponCodes", methods=["POST"])
+def save_coupon():
+    couponCode = request.get_json()
+
+    if not "code" in couponCode:
+        return abort(400, "code is required")
+
+    if not "discount" in couponCode:
+        return abort(400, "discount is required")
+
+    
+    db.couponCodes.insert_one(couponCode)
+
+    couponCode["_id"] = str(couponCode["_id"])
+    return json.dumps(couponCode)
+
+
+@app.route("/api/couponCodes", methods=["GET"])
+def get_coupon_codes():
+    cursor = db.couponCodes.find({})
+    result = []
+
+    for coupon in cursor:
+        coupon["_id"] = str(coupon["_id"])
+        result.append(coupon)
+    
+    return json.dumps(result)
+
+#
+@app.route("/api/couponCodes/<code>")
+def valid_coupon(code):
+    print(code)
+   
+  
+
+
+    coupon = db.couponCodes.find_one({"code" : code})
+    if not coupon:
+       return abort(404, "Your code is not a valid discount code") # 404 = not found
+
+       
+    coupon["_id"] = str(coupon["_id"])
+
+    return json.dumps(coupon)
+
+# GET /api/couponCodes/<code>
+# retrieve specific couponCodes by its code
+
+# POST /api/couponCodes
+# 1 - creat the end point
+# 2 - get the json from the reqs
+# 3 - save the couponCode to db.couponCodes
+# 4 - return the saved object as json
+# 5 - test it
+
+
+
+
 
 
 # start the server

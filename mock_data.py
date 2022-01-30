@@ -7,6 +7,8 @@ catalog =[
     "title": "Nike SB Dunk Strawberry Coughs",
     "price": 420.99,
     "stock": 5,
+    "discount": 15,
+    "code": "employee",
     "image": "strawberry.jpg",
     "category": "Exclusives",
   },
@@ -16,6 +18,8 @@ catalog =[
     "title": "Nike SB Dunk White Widows",
     "price": 420.99,
     "stock": 5,
+    "discount": 15,
+    "code": "employee",
     "image": "widow.jpg",
     "category": "Exclusives",
   },
@@ -25,6 +29,8 @@ catalog =[
     "title": "Nike SB Dunk Skunk ",
     "price": 420.99,
     "stock": 5,
+    "discount": 15,
+    "code": "employee",
     "image": "skunk.jpg",
     "category": "Exclusives",
   },
@@ -34,6 +40,8 @@ catalog =[
     "title": "Nike SB Dunk Reverse Skunk",
     "price": 420.99,
     "stock": 5,
+    "discount": 15,
+    "code": "vip",
     "image": "reverse.jpg",
     "category": "Exclusives",
   },
@@ -45,6 +53,7 @@ catalog =[
     "stock": 3,
     "image": "coolgrey.jpg",
     "discount": 15,
+    "code": "vip",
     "category": "Retro",
   },
 
@@ -53,9 +62,10 @@ catalog =[
     "title": "Yeezy 700 V3 Copper Fade",
     "price": 225.99,
     "stock": 5,
-    "image": "yz700cf.jpg",
     "discount": 15,
-    "category": "Hype Beast",
+    "code": "vip",
+    "image": "yz700cf.jpg",
+    "category": "Hype",
   },
 
   {
@@ -63,8 +73,9 @@ catalog =[
     "title": "Air Jordan 1 OG Patent Bred",
     "price": 470.99,
     "stock": 11,
-    "image": "aj1pb.jpg",
     "discount": 15,
+    "code": "vip",
+    "image": "aj1pb.jpg",
     "category": "Retro",
   },
 
@@ -73,9 +84,10 @@ catalog =[
     "title": "Air Jordan 1 OG Patent Bred",
     "price": 220.99,
     "stock": 3,
-    "image": "yz450rn.jpg",
     "discount": 15,
-    "category": "Hype Beast",
+    "code": "vip",
+    "image": "yz450rn.jpg",
+    "category": "Hype",
   },
 
   {
@@ -83,9 +95,10 @@ catalog =[
     "title": "Garcons Homme Foamposite One",
     "price": 650.99,
     "stock": 5,
-    "image": "foamsblack.jpg",
     "discount": 15,
-    "category": "Hype Beast",
+    "code": "vip",
+    "image": "foamsblack.jpg",
+    "category": "Hype",
   }
 ]
     
