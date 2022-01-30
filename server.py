@@ -5,10 +5,11 @@ import json
 import random
 from config import db
 from flask_cors import CORS
+from bson import ObjectId
 
 
 app = Flask(__name__)
-CORS(app) # *DANGER anyone can connect to this server
+CORS(app)  # *DANGER anyone can connect to this server
 me = {
     "name": "Antwone",
     "last": "Adams",
@@ -39,10 +40,13 @@ def about():
 
 @app.route("/api/catalog")
 def get_catalog():
-    test = db.products.find({})
-    print(test)
+    cursor = db.products.find({})
+    results = []
+    for product in cursor:
+        product["_id"] = str(product["_id"])
+        results.append(product)
 
-    return json.dumps(catalog)
+    return json.dumps(results)
 
 
 @app.route("/api/catalog", methods=["post"])
@@ -69,14 +73,12 @@ def save_product():
     if product["price"] <= 0:
         return abort(400, 'Price must be greater than $0.00')
 
-    
-    
-
     # save product in the catalog
     db.products.insert_one(product)
 
-    print("-----SAVED-----")
-    print(product)
+    # {_id: ObjectId('id number')}
+    product["_id"] = str(product["_id"])
+    # {_id:}
 
     return json.dumps(product)
 
@@ -84,27 +86,35 @@ def save_product():
 @app.route("/api/cheapest")
 def get_cheapest():
 
-    cheap = catalog[0]
-    for product in catalog:
+    cursor = db.products.find({})
+    cheap = cursor[0]
+    for product in cursor:
         if product["price"] < cheap["price"]:
             cheap = product
 
     # find the cheapest product on the catalog list
     # 1 - travel the list with for loop
     # 2 - printout the price on the console
-
+    cheap["_id"] = str(cheap["_id"])
     # return it as json
     return json.dumps(cheap)
 
 
 @app.route("/api/product/<id>")
 def get_product(id):
+    # validate id is valid ObjectId
+    if(not ObjectId.is_valid(id)):
+        return abort()
 
-    for product in catalog:
-        if product["_id"] == id:
-            return json.dumps(product)
-    # return it as json
-    return "NOT FOUND"
+
+    result = db.products.find_one({"_id" : ObjectId(id)})
+    if not result:
+       return abort(404, "id is not a valid ObjectID") # 404 = not found
+
+       
+    result["_id"] = str(result["_id"])
+
+    return json.dumps(result)
 
 
 @app.route("/api/catalog/<category>")
